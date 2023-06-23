@@ -4,23 +4,26 @@ require_relative "process_decl_iva/version"
 require_relative "process_decl_iva/process_reservations/talkguest"
 require_relative "process_decl_iva/process_expenses/e_fatura"
 require_relative "process_decl_iva/calculate"
-require "pry"
 
 module ProcessDeclIva
   class Error < StandardError; end
 
   class Runner
     def initialize
+      @year = ENV.fetch('Y')
+      @quarter = ENV.fetch('T')
     end
 
     def run
-      reporte = ask("Introduza o reporte do trimestre passado, ou <Enter> caso seja 0.00")
+      reporte = ask("Introduza o reporte do trimestre passado [0.00]")
       reporte = 0.0 if reporte.to_f.zero?
 
-      reservations_csv_path = prompt_file("Indique o ficheiro CSV com as reservas do ultimo trimestre", "resumo_talkguest_01-01-2023-31-03-2023.csv")
+      reservations_csv_path = prompt_file("Indique o ficheiro CSV com as reservas do ultimo trimestre", "docs/#{@year}/reservasT#{@quarter}.csv")
 
-      expenses_csv_path = prompt_file("Indique o ficheiro CSV com as despesas do ultimo trimestre", "2023 T1 e-fatura.csv")
+      expenses_csv_path = prompt_file("Indique o ficheiro CSV com as despesas do ultimo trimestre", "docs/#{@year}/faturasT#{@quarter}.csv")
 
+      other_commissions = ask("Indique se ocorreu em algumas outras comissoes no trimestre anterior [0.00]")
+      other_commissions = 0.0 if other_commissions.to_f.zero?
 
       reservations_csv  = File.read(reservations_csv_path)
       expenses_csv      = File.read(expenses_csv_path)
@@ -33,9 +36,9 @@ module ProcessDeclIva
       expenses_service.call
 
       Calculate.new(
-        from_last_period:  reporte,
+        from_last_period:  reporte.to_f,
         total_vat:         expenses_service.total_vat,
-        commissions:       reservations_service.commissions,
+        other_commissions: other_commissions.to_f,
         sales_vat:         reservations_service.sales_vat,
         sales_amount:      reservations_service.sales_amount
       ).call

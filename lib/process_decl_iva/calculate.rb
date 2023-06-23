@@ -5,14 +5,14 @@ module ProcessDeclIva
     def initialize(
       from_last_period:,
       total_vat:,
-      commissions:,
+      other_commissions:,
       sales_vat:,
       sales_amount:
     )
 
       @from_last_period = from_last_period
       @total_expenses_vat = total_vat
-      @commissions = commissions
+      @other_commissions = other_commissions
       @sales_vat = sales_vat
       @sales_amount = sales_amount
     end
@@ -28,8 +28,9 @@ module ProcessDeclIva
     end
 
     # Serviços efetuados por sujeitos passivos de outros Estados membros cujo imposto foi liquidado pelo declarante
+    # Comissoes
     def field_16
-      @commissions
+      (field_1 + field_2) * 0.15 + @other_commissions
     end
 
     # [16] * IVA
@@ -42,9 +43,13 @@ module ProcessDeclIva
       @total_expenses_vat + field_17
     end
 
-    # Excesso a reportar do período anterior
+    # Excesso a reportar para o período anterior
     def field_61
-      @from_last_period - field_2 - field_17
+      @from_last_period
+    end
+
+    def field_96
+      field_61 + field_24 - field_2 - field_17
     end
 
     # Operações localizadas em Portugal em que, na qualidade de adquirente, liquidou o IVA devido
@@ -61,18 +66,11 @@ module ProcessDeclIva
         '17' => field_17,
         '24' => field_24,
         '61' => field_61,
+        '96' => field_96,
         '97' => field_97
       }.each do |field_nr, value|
         puts [ "| ", field_nr.ljust(4), "| ", value.round(2).to_s.ljust(10), "|"].join
       end
-
-      # puts "1: #{field_1.round(2)}"
-      # puts "2: #{field_2.round(2)}"
-      # puts "16: #{field_16.round(2)}"
-      # puts "17: #{field_17.round(2)}"
-      # puts "24: #{field_24.round(2)}"
-      # puts "61: #{field_61.round(2)}"
-      # puts "97: #{field_97.round(2)}"
     end
   end
 end
