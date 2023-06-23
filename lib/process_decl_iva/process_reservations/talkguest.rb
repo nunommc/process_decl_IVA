@@ -18,7 +18,11 @@ module ProcessDeclIva::ProcessReservations
     private
 
     def sum_by(column_name)
-      csv.map { |row| row[column_name].to_f }.sum
+      rows.map { |row| row[column_name].to_f }.sum
+    end
+
+    def rows
+      csv.reject { |r| not [0, "0", "FALSE"].include?(r["Anulado"]) }
     end
   end
 end
