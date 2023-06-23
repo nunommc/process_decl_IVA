@@ -1,6 +1,6 @@
 module ProcessDeclIva
   class Calculate
-    VAT = (0.23).freeze
+    VAT = 0.23
 
     def initialize(
       from_last_period:,
@@ -60,16 +60,16 @@ module ProcessDeclIva
 
     def call
       {
-        '1' => field_1,
-        '2' => field_2,
-        '16' => field_16,
-        '17' => field_17,
-        '24' => field_24,
-        '61' => field_61,
-        '96' => field_96,
-        '97' => field_97
+        "1" => field_1,
+        "2" => field_2,
+        "16" => field_16,
+        "17" => field_17,
+        "24" => field_24,
+        "61" => field_61,
+        "96" => field_96,
+        "97" => field_97
       }.each do |field_nr, value|
-        puts [ "| ", field_nr.ljust(4), "| ", value.round(2).to_s.ljust(10), "|"].join
+        puts ["| ", field_nr.ljust(4), "| ", value.round(2).to_s.ljust(10), "|"].join
       end
     end
   end

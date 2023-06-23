@@ -22,18 +22,20 @@ require "csv"
 
 CSV::Converters[:numeric_with_currency] = lambda do |f|
   f.is_a?(String) ? f.gsub(/[$€]/, "").tr(",", ".").strip : f
-rescue StandardError # encoding conversion or date parse errors
+rescue # encoding conversion or date parse errors
   f
 end
 
 module ProcessDeclIva::ProcessExpenses
   class EFatura
     def initialize(csv)
-      @csv = CSV.parse(csv,
-                       headers: true,
-                       converters: %i[numeric_with_currency numeric],
-                       liberal_parsing: true,
-                       col_sep: ";")
+      @csv = CSV.parse(
+        csv,
+        headers: true,
+        converters: %i[numeric_with_currency numeric],
+        liberal_parsing: true,
+        col_sep: ";"
+      )
     end
 
     attr_reader :csv

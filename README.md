@@ -24,6 +24,12 @@ To install this gem onto your local machine, run `bundle exec rake install`. To 
 
 Bug reports and pull requests are welcome on GitHub at https://github.com/nunommc/process_decl_IVA
 
+1. Fork the repo
+2. Make changes
+3. Run test suite with `bundle exec rspec`
+4. Run `bundle exec standardrb` to standardize code formatting
+5. Submit a PR
+
 ## License
 
 Copyright (c) 2023 Nuno Costa, released under the [MIT License](https://opensource.org/licenses/MIT).

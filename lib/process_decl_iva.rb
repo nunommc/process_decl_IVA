@@ -10,8 +10,8 @@ module ProcessDeclIva
 
   class Runner
     def initialize
-      @year = ENV.fetch('Y')
-      @quarter = ENV.fetch('T')
+      @year = ENV.fetch("Y")
+      @quarter = ENV.fetch("T")
     end
 
     def run
@@ -25,22 +25,22 @@ module ProcessDeclIva
       other_commissions = ask("Indique se ocorreu em algumas outras comissoes no trimestre anterior [0.00]")
       other_commissions = 0.0 if other_commissions.to_f.zero?
 
-      reservations_csv  = File.read(reservations_csv_path)
-      expenses_csv      = File.read(expenses_csv_path)
+      reservations_csv = File.read(reservations_csv_path)
+      expenses_csv = File.read(expenses_csv_path)
 
       reservations_service = ProcessReservations::Talkguest.new(reservations_csv)
 
-      expenses_service     = ProcessExpenses::EFatura.new(expenses_csv)
+      expenses_service = ProcessExpenses::EFatura.new(expenses_csv)
 
       reservations_service.call
       expenses_service.call
 
       Calculate.new(
-        from_last_period:  reporte.to_f,
-        total_vat:         expenses_service.total_vat,
+        from_last_period: reporte.to_f,
+        total_vat: expenses_service.total_vat,
         other_commissions: other_commissions.to_f,
-        sales_vat:         reservations_service.sales_vat,
-        sales_amount:      reservations_service.sales_amount
+        sales_vat: reservations_service.sales_vat,
+        sales_amount: reservations_service.sales_amount
       ).call
     end
 
@@ -48,7 +48,7 @@ module ProcessDeclIva
 
     def ask(string)
       puts string
-      STDIN.gets.strip
+      $stdin.gets.strip
     end
 
     def yes?(question)
@@ -68,7 +68,7 @@ module ProcessDeclIva
       unless File.exist?(answer)
         puts "O ficheiro nao existe. Verifique se esta na pasta corrente ou indique o endereço completo"
 
-        exit -1
+        exit(-1)
       end
 
       puts

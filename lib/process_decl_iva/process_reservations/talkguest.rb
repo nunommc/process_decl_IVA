@@ -1,4 +1,4 @@
-require 'csv'
+require "csv"
 
 module ProcessDeclIva::ProcessReservations
   class Talkguest
@@ -21,7 +21,7 @@ module ProcessDeclIva::ProcessReservations
     end
 
     def rows
-      csv.reject { |r| not [0, "0", "FALSE"].include?(r["Anulado"]) }
+      csv.reject { |r| ![0, "0", "FALSE"].include?(r["Anulado"]) }
     end
   end
 end
