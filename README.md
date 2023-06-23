@@ -1,24 +1,18 @@
-# ProcessDeclIVA
-
-TODO: Delete this and the text below, and describe your gem
-
-Welcome to your new gem! In this directory, you'll find the files you need to be able to package up your Ruby library into a gem. Put your Ruby code in the file `lib/process_decl_IVA`. To experiment with that code, run `bin/console` for an interactive prompt.
+# Process Declaraçao Periodica do IVA
 
 ## Installation
 
-TODO: Replace `UPDATE_WITH_YOUR_GEM_NAME_PRIOR_TO_RELEASE_TO_RUBYGEMS_ORG` with your gem name right after releasing it to RubyGems.org. Please do not do it earlier due to security reasons. Alternatively, replace this section with instructions to install your gem from git if you don't plan to release to RubyGems.org.
-
-Install the gem and add to the application's Gemfile by executing:
-
-    $ bundle add UPDATE_WITH_YOUR_GEM_NAME_PRIOR_TO_RELEASE_TO_RUBYGEMS_ORG
-
-If bundler is not being used to manage dependencies, install the gem by executing:
-
-    $ gem install UPDATE_WITH_YOUR_GEM_NAME_PRIOR_TO_RELEASE_TO_RUBYGEMS_ORG
+```
+gem install process_decl_IVA
+```
 
 ## Usage
 
-TODO: Write usage instructions here
+Pass in the year and quarter like:
+
+```
+$ Y=2023 T=3 bin/process_decl_iva
+```
 
 ## Development
 
@@ -28,8 +22,14 @@ To install this gem onto your local machine, run `bundle exec rake install`. To 
 
 ## Contributing
 
-Bug reports and pull requests are welcome on GitHub at https://github.com/[USERNAME]/process_decl_IVA.
+Bug reports and pull requests are welcome on GitHub at https://github.com/nunommc/process_decl_IVA
+
+1. Fork the repo
+2. Make changes
+3. Run test suite with `bundle exec rspec`
+4. Run `bundle exec standardrb` to standardize code formatting
+5. Submit a PR
 
 ## License
 
-The gem is available as open source under the terms of the [MIT License](https://opensource.org/licenses/MIT).
+Copyright (c) 2023 Nuno Costa, released under the [MIT License](https://opensource.org/licenses/MIT).

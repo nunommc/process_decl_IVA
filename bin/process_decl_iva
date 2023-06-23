@@ -1,0 +1,6 @@
+#!/usr/bin/env ruby
+
+require_relative "../lib/process_decl_iva"
+
+iterative = ProcessDeclIva::Runner.new
+iterative.run

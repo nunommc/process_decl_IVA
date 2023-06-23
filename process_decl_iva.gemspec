@@ -1,15 +1,16 @@
 # frozen_string_literal: true
 
-require_relative "lib/process_decl_IVA/version"
+require_relative "lib/process_decl_iva/version"
 
 Gem::Specification.new do |spec|
   spec.name = "process_decl_IVA"
-  spec.version = ProcessDeclIVA::VERSION
+  spec.version = ProcessDeclIva::VERSION
   spec.authors = ["Nuno Costa"]
   spec.email = ["nuno.mmc@gmail.com"]
 
-  spec.summary = %q{Script para auxiliar no preenchimento da Declaração periódica do IVA}
-  spec.description = %q{Processa o CSV do mapa de reservas exportado da Talkguest e o CSV exportado do e-fatura para um dado trimestre, e demonstra que valores têm que ser preenchidos na declaração periódica do IVA}
+  spec.summary = "Script para auxiliar no preenchimento da Declaração periódica do IVA"
+  spec.description = 'Processa o CSV do mapa de reservas exportado da Talkguest e o CSV exportado do e-fatura
+    para um dado trimestre, e demonstra que valores têm que ser preenchidos na declaração periódica do IVA'
   spec.homepage = "https://process-decl-IVA.github.io"
   spec.license = "MIT"
   spec.required_ruby_version = ">= 2.6.0"
@@ -25,15 +26,13 @@ Gem::Specification.new do |spec|
       (File.expand_path(f) == __FILE__) || f.start_with?(*%w[bin/ test/ spec/ features/ .git .circleci appveyor])
     end
   end
-  spec.bindir = "exe"
-  spec.executables = spec.files.grep(%r{\Aexe/}) { |f| File.basename(f) }
+  spec.bindir = "bin"
+  spec.executables = ["process_decl_iva"]
   spec.require_paths = ["lib"]
 
-  # Uncomment to register a new dependency of your gem
-  spec.add_dependency "smart_csv"
-  spec.add_development_dependency "rspec", "~> 3.0"
-  spec.add_development_dependency "rubocop", "~> 1.21"
-
-  # For more information and examples about making a new gem, check out our
-  # guide at: https://bundler.io/guides/creating_gem.html
+  spec.add_development_dependency "bundler", "~> 2"
+  spec.add_development_dependency "guard-rspec"
+  spec.add_development_dependency "pry"
+  spec.add_development_dependency "standardrb"
+  spec.add_development_dependency "rake", "~> 11.3.0"
 end

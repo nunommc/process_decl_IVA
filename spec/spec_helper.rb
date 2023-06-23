@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require "process_decl_IVA"
+require "process_decl_iva"
 
 RSpec.configure do |config|
   # Enable flags like --only-failures and --next-failure
@@ -12,4 +12,6 @@ RSpec.configure do |config|
   config.expect_with :rspec do |c|
     c.syntax = :expect
   end
+
+  config.filter_run_when_matching :focus
 end
