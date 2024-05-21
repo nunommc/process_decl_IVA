@@ -1,4 +1,4 @@
-require "csv"
+require 'csv'
 
 module ProcessDeclIva::ProcessReservations
   class Talkguest
@@ -7,21 +7,18 @@ module ProcessDeclIva::ProcessReservations
     end
 
     attr_reader :csv
-    attr_accessor :sales_amount, :sales_vat
+    attr_accessor :sales_amount, :sales_vat, :commissions
 
     def call
       @sales_amount = sum_by("Base Incidência")
       @sales_vat = sum_by("Total Do IVA")
+      @commissions = (@sales_amount + @sales_vat) * 0.15
     end
 
     private
 
     def sum_by(column_name)
-      rows.map { |row| row[column_name].to_f }.sum
-    end
-
-    def rows
-      csv.reject { |r| ![0, "0", "FALSE"].include?(r["Anulado"]) }
+      csv.map { |row| row[column_name].to_f }.sum
     end
   end
 end
