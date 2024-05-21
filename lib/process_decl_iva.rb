@@ -10,37 +10,33 @@ module ProcessDeclIva
 
   class Runner
     def initialize
-      @year = ENV.fetch("Y")
-      @quarter = ENV.fetch("T")
     end
 
     def run
-      reporte = ask("Introduza o reporte do trimestre passado [0.00]")
+      reporte = ask("Introduza o reporte do trimestre passado, ou <Enter> caso seja 0.00")
       reporte = 0.0 if reporte.to_f.zero?
 
-      reservations_csv_path = prompt_file("Indique o ficheiro CSV com as reservas do ultimo trimestre", "docs/#{@year}/reservasT#{@quarter}.csv")
+      reservations_csv_path = prompt_file("Indique o ficheiro CSV com as reservas do ultimo trimestre", "resumo_talkguest_01-01-2023-31-03-2023.csv")
 
-      expenses_csv_path = prompt_file("Indique o ficheiro CSV com as despesas do ultimo trimestre", "docs/#{@year}/faturasT#{@quarter}.csv")
+      expenses_csv_path = prompt_file("Indique o ficheiro CSV com as despesas do ultimo trimestre", "2023 T1 e-fatura.csv")
 
-      other_commissions = ask("Indique se ocorreu em algumas outras comissoes no trimestre anterior [0.00]")
-      other_commissions = 0.0 if other_commissions.to_f.zero?
 
-      reservations_csv = File.read(reservations_csv_path)
-      expenses_csv = File.read(expenses_csv_path)
+      reservations_csv  = File.read(reservations_csv_path)
+      expenses_csv      = File.read(expenses_csv_path)
 
       reservations_service = ProcessReservations::Talkguest.new(reservations_csv)
 
-      expenses_service = ProcessExpenses::EFatura.new(expenses_csv)
+      expenses_service     = ProcessExpenses::EFatura.new(expenses_csv)
 
       reservations_service.call
       expenses_service.call
 
       Calculate.new(
-        from_last_period: reporte.to_f,
-        total_vat: expenses_service.total_vat,
-        other_commissions: other_commissions.to_f,
-        sales_vat: reservations_service.sales_vat,
-        sales_amount: reservations_service.sales_amount
+        from_last_period:  reporte,
+        total_vat:         expenses_service.total_vat,
+        commissions:       reservations_service.commissions,
+        sales_vat:         reservations_service.sales_vat,
+        sales_amount:      reservations_service.sales_amount
       ).call
     end
 
@@ -48,7 +44,7 @@ module ProcessDeclIva
 
     def ask(string)
       puts string
-      $stdin.gets.strip
+      STDIN.gets.strip
     end
 
     def yes?(question)
@@ -68,7 +64,7 @@ module ProcessDeclIva
       unless File.exist?(answer)
         puts "O ficheiro nao existe. Verifique se esta na pasta corrente ou indique o endereço completo"
 
-        exit(-1)
+        exit -1
       end
 
       puts

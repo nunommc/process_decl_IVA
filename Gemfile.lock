@@ -107,6 +107,8 @@ DEPENDENCIES
   process_decl_IVA!
   pry
   rake (~> 11.3.0)
+  rspec
+  rubocop
   standardrb
 
 BUNDLED WITH
