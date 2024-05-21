@@ -65,14 +65,6 @@ module ProcessDeclIva
       }.each do |field_nr, value|
         puts [ "| ", field_nr.ljust(4), "| ", value.round(2).to_s.ljust(10), "|"].join
       end
-
-      # puts "1: #{field_1.round(2)}"
-      # puts "2: #{field_2.round(2)}"
-      # puts "16: #{field_16.round(2)}"
-      # puts "17: #{field_17.round(2)}"
-      # puts "24: #{field_24.round(2)}"
-      # puts "61: #{field_61.round(2)}"
-      # puts "97: #{field_97.round(2)}"
     end
   end
 end
